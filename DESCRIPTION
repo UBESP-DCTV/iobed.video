@@ -9,11 +9,13 @@ License: MIT + file LICENSE
 URL: https://github.com/UBESP-DCTV/iobed.video
 BugReports: https://github.com/UBESP-DCTV/iobed.video/issues
 Imports: 
+    rlang (>= 0.4.11),
     tibble
 Suggests: 
     autotestthat (>= 0.1.1),
     checkmate,
     purrr,
+    roxygen2,
     spelling,
     testthat (>= 3.0.0),
     withr
