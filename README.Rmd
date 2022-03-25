@@ -18,6 +18,8 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/iobed.video)](https://CRAN.R-project.org/package=iobed.video)
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![R-CMD-check](https://github.com/UBESP-DCTV/iobed.video/workflows/R-CMD-check/badge.svg)](https://github.com/UBESP-DCTV/iobed.video/actions)
+[![R-CMD-check-develop](https://github.com/UBESP-DCTV/iobed.video/workflows/R-CMD-check-develop/badge.svg)](https://github.com/UBESP-DCTV/iobed.video/actions)
 <!-- badges: end -->
 
 The goal of `{iobed.video}` is to provide utility functions for the management of video-signals from cameras at UBEP within the IOBED project.

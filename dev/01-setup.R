@@ -37,7 +37,7 @@ lintr::lint_package()
 
 usethis::use_git()
 usethis::git_vaccinate()
-usethis::use_github("UBESP-DCTV")
+usethis::use_github("UBESP-DCTV", private = TRUE)
 usethis::use_tidy_github()
 
 renv::init()
@@ -50,10 +50,13 @@ usethis::use_github_action("pkgdown")
 
 usethis::use_tibble()
 # required if used w/ Windows machines (even for CI/CD)
-renv::install("tidyverse/tibble", INSTALL_opts = c("--no-multiarch"))
+renv::install("tibble")
+usethis::use_tibble()
 
 renv::install("purrr")
 usethis::use_package("purrr", type = "Suggests")
+renv::install("withr")
+usethis::use_package("withr", type = "Suggests")
 renv::status()
 
 usethis::use_tidy_description()
