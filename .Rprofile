@@ -1,8 +1,6 @@
-source("renv/activate.R")
-
-
 options(
-  tidyverse.quiet = TRUE
+  tidyverse.quiet = TRUE,
+  repos = c(RSPPM = "https://packagemanager.rstudio.com/all/latest")
 )
 
 if (interactive()) {
