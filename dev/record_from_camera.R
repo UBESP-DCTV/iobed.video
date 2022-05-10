@@ -1,11 +1,11 @@
 # Install rtools
 # https://cran.r-project.org/bin/windows/Rtools/history.html
 
-# Install CMake
+# Install CMake at system level
 # https://cmake.org/download/
 
 # install.packages("ROpenCVLite")
-# ROpenCVLite::installOpenCV()
+# ROpenCVLite::installOpenCV() # if it works....
 #
 # install.packages("devtools")
 # devtools::install_github("swarm-lab/Rvision")
@@ -38,10 +38,12 @@ record_from_camera <- function(
   img <- imm[nrow(imm):1, 1:ncol(imm), 3:1 , drop = FALSE]
   img_range <- range(img)
   if (diff(img_range) != 0) {
-    img <- 255 * ((img - img_range[1])/(img_range[2] -
-                                          img_range[1]))
+    img <- 255 * (
+      (img - img_range[1]) / diff(img_range)
+    )
   }
-    withr::defer(Rvision::release(my_stream))
+
+  withr::defer(Rvision::release(my_stream))
 
   plot(Rvision::readNext(my_stream))
 

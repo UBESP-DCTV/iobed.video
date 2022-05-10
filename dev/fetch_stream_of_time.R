@@ -3,7 +3,11 @@
 # Functions -------------------------------------------------------
 
 
-fetch_stream_of_time <- function(sec, fps = 3) {
+fetch_stream_of_time <- function(
+    max_sec_estimated = 3600,
+    fps = 25,
+    stop_loop = FALSE
+) {
 
   op <- options(digits.secs = 6)
   withr::defer(options(op))
@@ -11,19 +15,33 @@ fetch_stream_of_time <- function(sec, fps = 3) {
   my_stream <- Rvision::stream(index = 0)
   withr::defer(Rvision::release(my_stream))
 
-  t <- fps * sec
+  t <- fps * max_sec_estimated
+  ms_step <- round(1 / fps, 3)
   frames <- vector("list", t)
   names <- vector("character", t)
 
+
+
+  time_0 <- Sys.time()
+
   for (i in seq_len(t)) {
-    names[[i]] <- Sys.time() |>
+    if (stop_loop) break
+
+    time_i <- Sys.time()
+    while (time_i < time_0 + ms_step) {
+      time_i <- Sys.time()
+    }
+
+    frames[[i]] <- Rvision::readNext(my_stream)
+
+    names[[i]] <- time_i |>
       stringr::str_replace_all(c(
         `-|:` = "",
         ` `="t",
         `\\.`="m"
       ))
 
-    frames[[i]] <- Rvision::readNext(my_stream)
+    time_0 <- time_i
   }
 
   invisible(purrr::set_names(frames, names))
