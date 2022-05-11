@@ -3,6 +3,43 @@
 # Functions -------------------------------------------------------
 
 
+
+
+max_sec_estimated <- 60
+fps <-  30
+index <-  0
+
+op <- options(digits.secs = 6)
+withr::defer(options(op))
+
+my_stream <- Rvision::stream(index = index)
+
+my_queue <- my_stream |>
+  Rvision::queue(
+    size = max_sec_estimated * fps,
+    overflow = "replace"
+  )
+
+
+frames <- vector("list", 3600 * fps)
+names <- vector("character", 3600 * fps)
+i <- 1L
+while (TRUE) {
+  frames[[i]] <- Rvision::readNext(my_queue)
+
+  names[[i]] <- Sys.time() |>
+    stringr::str_replace_all(c(
+      `-|:` = "",
+      ` `="t",
+      `\\.`="m"
+    ))
+  i <- i + 1L
+}
+
+res <- purrr::set_names(frames, names)
+
+
+
 fetch_stream_of_time <- function(
     max_sec_estimated = 3600,
     fps = 25,
@@ -49,10 +86,33 @@ fetch_stream_of_time <- function(
 
 
 
+write_queue_files <- function(queue, dir) {
+  stopifnot(fs::is_dir(dir))
+
+  output_files <- paste0(seq_len(length(queue)), ".png")
+  out_paths <- fs::path_expand(file.path(dir, output_files))
+
+  wi_safe <- purrr::safely(~{
+    suppressMessages(Rvision::write.Image(.x, .y))
+    TRUE
+  }, otherwise = FALSE)
+  res <- vector("list", length(queue)) |>
+    purrr::set_names(output_files)
+
+  for (frame in seq_along(queue)) {
+    res[[frame]] <- wi_safe(queue$readNext(), out_paths[[frame]])
+  }
+  res <- purrr::transpose(res)
+  are_succeded <- unlist(res[["result"]])
+  errors <- res[["error"]][!are_succeded]
+
+}
+
+
 write_stream_files <- function(stream, dir) {
   stopifnot(fs::is_dir(dir))
 
-  output_files <- paste0(names(stream), ".png")
+  output_files <- paste0(seq_len(length(stream)), ".png")
   out_paths <- fs::path_expand(file.path(dir, output_files))
 
   wi_safe <- purrr::safely(~{
