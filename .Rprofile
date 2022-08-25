@@ -1,3 +1,4 @@
+source("renv/activate.R")
 options(
   tidyverse.quiet = TRUE,
   repos = c(RSPPM = "https://packagemanager.rstudio.com/all/latest")
