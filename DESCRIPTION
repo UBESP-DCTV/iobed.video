@@ -1,6 +1,6 @@
 Package: iobed.video
 Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9001
+Version: 0.1.0
 Authors@R: 
     person("Corrado", "Lanera", , "corrado.lanera@gmail.com", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0002-0520-7428"))

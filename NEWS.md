@@ -1,4 +1,4 @@
-# iobed.video (development version)
+# iobed.video 0.1.0
 
 - activate supporto for `{tidyeval}`
 
