@@ -1,6 +1,6 @@
 Package: iobed.video
 Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: 
     person("Corrado", "Lanera", , "corrado.lanera@gmail.com", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0002-0520-7428"))
@@ -9,11 +9,14 @@ License: MIT + file LICENSE
 URL: https://github.com/UBESP-DCTV/iobed.video
 BugReports: https://github.com/UBESP-DCTV/iobed.video/issues
 Imports: 
+    rlang (>= 0.4.11),
+    ROpenCVLite,
     tibble
 Suggests: 
     autotestthat (>= 0.1.1),
     checkmate,
     purrr,
+    roxygen2,
     spelling,
     testthat (>= 3.0.0),
     withr
